@@ -21,6 +21,7 @@ on:
   push:
     branches:
       - master
+      - test
 
 env:
   HUB: ghcr.io/apache/skywalking-python
