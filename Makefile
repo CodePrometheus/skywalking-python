@@ -37,15 +37,16 @@ poetry-fallback:
 	python3 -m pip install --user pipx
 	python3 -m pipx ensurepath
 	pipx install poetry
-	pipx upgrade poetry
 
 poetry:
 ifeq ($(OS),Windows)
 	-powershell (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 	poetry self update
-else
+else ifeq ($(OS),Darwin)
 	-curl -sSL https://install.python-poetry.org | python3 -
 	poetry self update || $(MAKE) poetry-fallback
+else
+	-curl -sSL https://install.python-poetry.org | python3 - --version 1.5.1
 endif
 
 .PHONY: gen
